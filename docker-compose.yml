@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  prefect-server:
+    image: prefecthq/prefect:2-python3.11
+    command: prefect server start --host 0.0.0.0
+    ports:
+      - "4200:4200"
+    volumes:
+      - prefect-data:/root/.prefect
+
+  weather-worker:
+    build: .
+    command: prefect worker start -p weather-pool -t process
+    environment:
+      PREFECT_API_URL: http://prefect-server:4200/api
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+      BIGQUERY_DATASET: ${BIGQUERY_DATASET:-weather_analytics}
+      BIGQUERY_RAW_DATASET: ${BIGQUERY_RAW_DATASET:-raw_weather}
+      GCS_BUCKET: ${GCS_BUCKET}
+      GOOGLE_APPLICATION_CREDENTIALS: /app/credentials/service-account.json
+      SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-}
+    volumes:
+      - ./credentials:/app/credentials:ro
+    depends_on:
+      - prefect-server
+
+volumes:
+  prefect-data:
