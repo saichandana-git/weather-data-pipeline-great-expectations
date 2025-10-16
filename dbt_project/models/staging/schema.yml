@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_weather_hourly
+    description: "Cleaned hourly weather observations, deduplicated"
+    columns:
+      - name: city_name
+        tests: [not_null]
+      - name: observation_time
+        tests: [not_null]
+      - name: temperature_c
+        tests:
+          - not_null:
+              config: {severity: warn}
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: -60
+              max_value: 60
+      - name: humidity_pct
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 100
+      - name: wind_speed_ms
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 120
+      - name: pressure_hpa
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 870
+              max_value: 1084
