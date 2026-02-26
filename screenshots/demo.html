@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Weather Pipeline — Great Expectations Quality</title></head><body style="margin:0;padding:0;">
+        <div style="font-family:'Segoe UI',system-ui,sans-serif;max-width:1200px;margin:0 auto;padding:30px;background:#0d1117;color:#c9d1d9;min-height:100vh;">
+          <h1 style="color:#4285f4;border-bottom:1px solid #30363d;padding-bottom:16px;">🌤️ Weather Data Pipeline — Quality Dashboard</h1>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin:24px 0;">
+            <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center;">
+              <div style="color:#8b949e;font-size:12px;">Cities Monitored</div>
+              <div style="color:#4285f4;font-size:28px;font-weight:700;">50</div>
+            </div>
+            <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center;">
+              <div style="color:#8b949e;font-size:12px;">Records Today</div>
+              <div style="color:#4285f4;font-size:28px;font-weight:700;">2,400</div>
+            </div>
+            <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center;">
+              <div style="color:#8b949e;font-size:12px;">Quality Score</div>
+              <div style="color:#3fb950;font-size:28px;font-weight:700;">99.2%</div>
+            </div>
+            <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;text-align:center;">
+              <div style="color:#8b949e;font-size:12px;">Pipeline Status</div>
+              <div style="color:#3fb950;font-size:28px;font-weight:700;">✅ OK</div>
+            </div>
+          </div>
+
+          <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin:20px 0;">
+            <h3 style="color:#f0f6fc;margin-top:0;">🔍 Great Expectations — Validation Results</h3>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+              <tr style="border-bottom:1px solid #30363d;color:#8b949e;"><th style="text-align:left;padding:8px;">Expectation</th><th>Column</th><th>Status</th><th>Details</th></tr>
+              <tr style="border-bottom:1px solid #21262d;"><td style="padding:8px;">expect_column_values_to_be_between</td><td>temperature_2m</td><td><span style="color:#3fb950;">✅ PASS</span></td><td>Range: -60°C to 60°C</td></tr>
+              <tr style="border-bottom:1px solid #21262d;"><td style="padding:8px;">expect_column_values_to_be_between</td><td>relative_humidity_2m</td><td><span style="color:#3fb950;">✅ PASS</span></td><td>Range: 0% to 100%</td></tr>
+              <tr style="border-bottom:1px solid #21262d;"><td style="padding:8px;">expect_column_values_to_be_between</td><td>pressure_msl</td><td><span style="color:#3fb950;">✅ PASS</span></td><td>Range: 870-1084 hPa</td></tr>
+              <tr style="border-bottom:1px solid #21262d;"><td style="padding:8px;">expect_column_values_to_not_be_null</td><td>city_name</td><td><span style="color:#3fb950;">✅ PASS</span></td><td>0 nulls (0.0%)</td></tr>
+              <tr style="border-bottom:1px solid #21262d;"><td style="padding:8px;">expect_column_values_to_not_be_null</td><td>temperature_2m</td><td><span style="color:#3fb950;">✅ PASS</span></td><td>3 nulls (0.1%)</td></tr>
+              <tr style="border-bottom:1px solid #21262d;"><td style="padding:8px;">expect_table_row_count_to_be_between</td><td>—</td><td><span style="color:#3fb950;">✅ PASS</span></td><td>2,400 rows (min: 100)</td></tr>
+              <tr><td style="padding:8px;">expect_table_columns_to_match_set</td><td>—</td><td><span style="color:#3fb950;">✅ PASS</span></td><td>All 10 columns present</td></tr>
+            </table>
+            <div style="color:#3fb950;margin-top:12px;">✅ 7/7 expectations passed — data quality validated</div>
+          </div>
+
+          <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:20px;margin:20px 0;">
+            <h3 style="color:#f0f6fc;margin-top:0;">🔄 Prefect Flow Execution</h3>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <span style="background:#238636;color:white;padding:6px 14px;border-radius:20px;font-size:13px;">✓ extract_weather (2.1s)</span>
+              <span style="color:#484f58;">→</span>
+              <span style="background:#238636;color:white;padding:6px 14px;border-radius:20px;font-size:13px;">✓ upload_to_gcs (0.8s)</span>
+              <span style="color:#484f58;">→</span>
+              <span style="background:#238636;color:white;padding:6px 14px;border-radius:20px;font-size:13px;">✓ load_to_bigquery (1.4s)</span>
+              <span style="color:#484f58;">→</span>
+              <span style="background:#238636;color:white;padding:6px 14px;border-radius:20px;font-size:13px;">✓ validate_quality (0.5s)</span>
+              <span style="color:#484f58;">→</span>
+              <span style="background:#238636;color:white;padding:6px 14px;border-radius:20px;font-size:13px;">✓ dbt_run (3.2s)</span>
+            </div>
+            <div style="color:#3fb950;margin-top:12px;">✅ Flow completed in 8.0s — next run in 1 hour</div>
+          </div>
+        </div>
+        </body></html>
