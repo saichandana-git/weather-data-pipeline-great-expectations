@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.env
+venv/
+.venv/
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+great_expectations/uncommitted/
+*.json.bak
+.DS_Store
+Thumbs.db
